@@ -24,17 +24,4 @@ client.on('message', msg => {
     }
   });
 
-  client.on('message', msg => {
-    if (msg.content === 'infousuario') {
-
-        let embedus = new Discord.MessageEmbed()
-        .setAuthor("Info de el Usuario", miembro.displayAvatarURL)
-        .addField("Usuario:", `(**${miembro.tag}**) [${miembro}]`)
-        .addField("ID Usuario:", `${miembro.id}`)
-        .setThumbnail(miembro.displayAvatarURL)
-        .setFooter("Info solicitada por", msg.author.tag, msg.author.displayAvatarURL)
-        msg.reply(embedus);
-    }
-});
-
 client.login('');
