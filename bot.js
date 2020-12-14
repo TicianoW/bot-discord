@@ -59,6 +59,26 @@ client.on('message', msg => {
     })
   
   })
+  client.on('channelCreate', (channel) => {
+    if(!channel.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
+    if(!channel.guild) return;
+    channel.guild.fetchAuditLogs().then(logs => { 
+     let userID = logs.entries.first().executor.id;
+       let embedcrcan = new Discord.MessageEmbed() 
+       .setTitle('**[CANAL CREADO]**')
+       .setColor('GREEN')
+       .addField("Nombre de el Canal:", channel.name, true)
+       .addField("ID De el Canal:", `\`${channel.id}\``, true)
+       .addField("Tipo de Canal:", `\`${channel.type}\``, false)
+       .addField("Canal Creado por:", `**__<@!${userID}>__**`, true)
+       .addField("ID Creador de el Canal", `\`${userID}\``, true)
+       .setTimestamp()
+       .setFooter(config.footer)
+       let channel22 = client.channels.cache.get(config.idcanallogs);
+       channel22.send(embedcrcan);
+    })
+    
+   })
   client.on('roleUpdate', (oldRole, newRole) => {
     if(!oldRole.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
     oldRole.guild.fetchAuditLogs().then(logs => { 
