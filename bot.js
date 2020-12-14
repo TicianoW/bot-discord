@@ -54,8 +54,8 @@ client.on('message', msg => {
         .addField("ID De el que ha editado el Canal", `\`${userID}\``, true)
         .setTimestamp()
         .setFooter(config.footer)
-        let channel = oldChannel.guild.channels.cache.get(config.idcanallogs);
-        channel.send(embededcan);
+        let canalLogs = oldChannel.guild.channels.cache.get(config.idcanallogs);
+        canalLogs.send(embededcan);
        }
     })
   })
@@ -75,8 +75,8 @@ client.on('message', msg => {
        .addField("ID Creador de el Canal", `\`${userID}\``, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let channel22 = client.channels.cache.get(config.idcanallogs);
-       channel22.send(embedcrcan);
+       let canalLogs = client.channels.cache.get(config.idcanallogs);
+       canalLogs.send(embedcrcan);
     })
    })
 
@@ -95,8 +95,8 @@ client.on('message', msg => {
        .addField("Canal Eliminado Por:", `**__<@!${userID}>__**`, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let channel = client.channels.cache.get(config.idcanallogs);
-       channel.send(embedbrcan);
+       let canalLogs = client.channels.cache.get(config.idcanallogs);
+       canalLogs.send(embedbrcan);
     })
    })
 
@@ -115,8 +115,8 @@ client.on('message', msg => {
          .addField("ID De el que ha editado el Rol", `\`${userID}\``, true)
          .setTimestamp()
          .setFooter(config.footer)
-         let channel = client.channels.cache.get(config.idcanallogs);
-         channel.send(embededrol);
+         let canalLogs = client.channels.cache.get(config.idcanallogs);
+         canalLogs.send(embededrol);
       }
     })
    })
@@ -134,8 +134,8 @@ client.on('message', msg => {
        .addField("ID Creador de el Rol", `\`${userID}\``, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let channel = client.channels.cache.get(config.idcanallogs);
-       channel.send(embedcrrol);
+       let canalLogs = client.channels.cache.get(config.idcanallogs);
+       canalLogs.send(embedcrrol);
     })
    })
 
@@ -152,8 +152,8 @@ client.on('message', msg => {
        .addField("ID De el que ha borrado el Rol", `\`${userID}\``, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let channel = client.channels.cache.get(config.idcanallogs);
-       channel.send(embedbrrol);
+       let canalLogs = client.channels.cache.get(config.idcanallogs);
+       canalLogs.send(embedbrrol);
     })
    })
    
