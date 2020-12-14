@@ -7,7 +7,7 @@ Abres el CMD
 #
 Escribes npm init -y
 #
-Abres el archivo config.json pones el token de tu bot el canal de logs y un Footer para los embeds
+Abres el archivo config.json pones el token de tu bot el canal de logs un prefijo, un Footer para los embeds.
 #
 Abres el CMD
 #
