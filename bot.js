@@ -54,7 +54,7 @@ client.on('message', msg => {
         .addField("ID De el que ha editado el Canal", `\`${userID}\``, true)
         .setTimestamp()
         .setFooter(config.footer)
-        let canalLogs = oldChannel.guild.channels.cache.get(config.idcanallogs);
+        let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
         canalLogs.send(embededcan);
        }
     })
@@ -75,7 +75,7 @@ client.on('message', msg => {
        .addField("ID Creador de el Canal", `\`${userID}\``, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let canalLogs = client.channels.cache.get(config.idcanallogs);
+       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
        canalLogs.send(embedcrcan);
     })
   })
@@ -95,7 +95,7 @@ client.on('message', msg => {
        .addField("Canal Eliminado Por:", `**__<@!${userID}>__**`, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let canalLogs = client.channels.cache.get(config.idcanallogs);
+       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
        canalLogs.send(embedbrcan);
     })
   })
@@ -115,7 +115,7 @@ client.on('message', msg => {
          .addField("ID De el que ha editado el Rol", `\`${userID}\``, true)
          .setTimestamp()
          .setFooter(config.footer)
-         let canalLogs = client.channels.cache.get(config.idcanallogs);
+         let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
          canalLogs.send(embededrol);
       }
     })
@@ -134,7 +134,7 @@ client.on('message', msg => {
        .addField("ID Creador de el Rol", `\`${userID}\``, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let canalLogs = client.channels.cache.get(config.idcanallogs);
+       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
        canalLogs.send(embedcrrol);
     })
   })
@@ -152,7 +152,7 @@ client.on('message', msg => {
        .addField("ID De el que ha borrado el Rol", `\`${userID}\``, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let canalLogs = client.channels.cache.get(config.idcanallogs);
+       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
        canalLogs.send(embedbrrol);
     })
   })
@@ -170,7 +170,7 @@ client.on('message', msg => {
        .addField("Mensaje Ahora:", `${newMessage.content}`, true)
        .setTimestamp()
        .setFooter(config.footer)
-    let canalLogs = client.channels.cache.get(config.idcanallogs);
+       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
     canalLogs.send(embedmsgact);
   })
 
@@ -188,7 +188,7 @@ client.on('message', msg => {
        .addField("ID Canal:", `\`${c.id}\``, true)
        .setTimestamp()
        .setFooter(config.footer)
-    let canalLogs = client.channels.cache.get(config.idcanallogs);
+       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
     canalLogs.send(embedmsgact);
   })
 
@@ -207,7 +207,7 @@ client.on('message', msg => {
        .addField("ID De el Author", message.author.id, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let canalLogs = client.channels.cache.get(config.idcanallogs);
+       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
        canalLogs.send(embedmsgel);
   })
    client.on('guildMemberAdd', (member) => {
