@@ -39,27 +39,6 @@ client.on('message', msg => {
       }
   });
 
-  client.on('channelUpdate', (oldChannel, newChannel) => {
-    if(!oldChannel.guild) return;
-    oldChannel.guild.fetchAuditLogs().then(logs => {
-       let userID = logs.entries.first().executor.id;
-       if(oldChannel.name !== newChannel.name) {
-        let embededcan = new Discord.MessageEmbed()  
-        .setTitle('**[CANAL EDITADO]**')
-        .setColor('ORANGE')
-        .addField("Anterior Nombre:", oldChannel.name, true)
-        .addField("Nuevo Nombre:", newChannel.name, true)
-        .addField("ID De el Canal:", `\`${oldChannel.id}\``, false)
-        .addField("Canal Editado por:", `**__<@!${userID}>__**`, true)
-        .addField("ID De el que ha editado el Canal", `\`${userID}\``, true)
-        .setTimestamp()
-        .setFooter(config.footer)
-        let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
-        canalLogs.send(embededcan);
-       }
-    })
-  })
-
   client.on('channelCreate', (channel) => {
     if(!channel.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
     if(!channel.guild) return;
@@ -75,7 +54,7 @@ client.on('message', msg => {
        .addField("ID Creador de el Canal", `\`${userID}\``, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
+       let canalLogs = client.channels.cache.get(config.idCanalLogs);
        canalLogs.send(embedcrcan);
     })
   })
@@ -95,32 +74,10 @@ client.on('message', msg => {
        .addField("Canal Eliminado Por:", `**__<@!${userID}>__**`, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
+       let canalLogs = client.channels.cache.get(config.idCanalLogs);
        canalLogs.send(embedbrcan);
     })
   })
-
-  client.on('roleUpdate', (oldRole, newRole) => {
-    if(!oldRole.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
-    oldRole.guild.fetchAuditLogs().then(logs => { 
-     let userID = logs.entries.first().executor.id;
-     if(oldRole.name !== newRole.name) {
-      let embededrol = new Discord.MessageEmbed()  
-         .setTitle('**[ROL EDITADO]**')
-         .setColor('ORANGE')
-         .addField("Anterior Nombre:", oldRole.name, true)
-         .addField("Nuevo Nombre:", newRole.name, true)
-         .addField("ID De el Rol:", `\`${oldRole.id}\``, false)
-         .addField("Rol Editado por:", `**__<@!${userID}>__**`, true)
-         .addField("ID De el que ha editado el Rol", `\`${userID}\``, true)
-         .setTimestamp()
-         .setFooter(config.footer)
-         let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
-         canalLogs.send(embededrol);
-      }
-    })
-  })
-
    client.on('roleCreate', (role) => {
     if(!role.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
     role.guild.fetchAuditLogs().then(logs => { 
@@ -134,7 +91,7 @@ client.on('message', msg => {
        .addField("ID Creador de el Rol", `\`${userID}\``, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
+       let canalLogs = client.channels.cache.get(config.idCanalLogs);
        canalLogs.send(embedcrrol);
     })
   })
@@ -152,29 +109,12 @@ client.on('message', msg => {
        .addField("ID De el que ha borrado el Rol", `\`${userID}\``, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
+       let canalLogs = client.channels.cache.get(config.idCanalLogs);
        canalLogs.send(embedbrrol);
     })
   })
-   client.on('messageUpdate', (oldMessage, newMessage) => {
-    let canal = newMessage.channel.name
-    let miembro = newMessage.member.displayName
-    let embedmsgact = new Discord.MessageEmbed() 
-       .setTitle('**[MENSAJE EDITADO]**')
-       .setColor('RED')
-       .addField("Mensaje de:", miembro, true)
-       .addField("ID Author:", `\`${miembro.id}\``, true)
-       .addField("Canal:", canal, false)
-       .addField("ID Canal:", `\`${canal.id}\``, false)
-       .addField("Mensaje Anterior:", `${oldMessage.content}`, true)
-       .addField("Mensaje Ahora:", `${newMessage.content}`, true)
-       .setTimestamp()
-       .setFooter(config.footer)
-       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
-    canalLogs.send(embedmsgact);
-  })
-
    client.on('message', (message) => {
+    if (message.author.bot) return;
     let m = message.content
     let c = message.channel.name
     let a = message.author.username
@@ -188,11 +128,12 @@ client.on('message', msg => {
        .addField("ID Canal:", `\`${c.id}\``, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
+       let canalLogs = client.channels.cache.get(config.idCanalLogs);
     canalLogs.send(embedmsgact);
   })
 
    client.on('messageDelete', (message) => {
+    if (message.author.bot) return;
      if(message.author.bot) return;
      if(message.channel.type === 'dm') return;
      if(!message.guild.member(client.user).hasPermission('MANAGE_MESSAGES')) return;
@@ -207,7 +148,7 @@ client.on('message', msg => {
        .addField("ID De el Author", message.author.id, true)
        .setTimestamp()
        .setFooter(config.footer)
-       let canalLogs = oldChannel.guild.channels.cache.get(config.idCanalLogs);
+       let canalLogs = client.channels.cache.get(config.idCanalLogs);
        canalLogs.send(embedmsgel);
   })
    client.on('guildMemberAdd', (member) => {
