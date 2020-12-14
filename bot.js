@@ -78,7 +78,7 @@ client.on('message', msg => {
        let canalLogs = client.channels.cache.get(config.idcanallogs);
        canalLogs.send(embedcrcan);
     })
-   })
+  })
 
    client.on('channelDelete', (channel) => {
     if(!channel.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
@@ -98,7 +98,7 @@ client.on('message', msg => {
        let canalLogs = client.channels.cache.get(config.idcanallogs);
        canalLogs.send(embedbrcan);
     })
-   })
+  })
 
   client.on('roleUpdate', (oldRole, newRole) => {
     if(!oldRole.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
@@ -119,7 +119,7 @@ client.on('message', msg => {
          canalLogs.send(embededrol);
       }
     })
-   })
+  })
 
    client.on('roleCreate', (role) => {
     if(!role.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
@@ -137,7 +137,7 @@ client.on('message', msg => {
        let canalLogs = client.channels.cache.get(config.idcanallogs);
        canalLogs.send(embedcrrol);
     })
-   })
+  })
 
    client.on('roleDelete', (role) => {
     if(!role.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
@@ -155,6 +155,83 @@ client.on('message', msg => {
        let canalLogs = client.channels.cache.get(config.idcanallogs);
        canalLogs.send(embedbrrol);
     })
-   })
-   
+  })
+   client.on('messageUpdate', (oldMessage, newMessage) => {
+    let canal = newMessage.channel.name
+    let miembro = newMessage.member.displayName
+    let embedmsgact = new Discord.MessageEmbed() 
+       .setTitle('**[MENSAJE EDITADO]**')
+       .setColor('RED')
+       .addField("Mensaje de:", miembro, true)
+       .addField("ID Author:", `\`${miembro.id}\``, true)
+       .addField("Canal:", canal, false)
+       .addField("ID Canal:", `\`${canal.id}\``, false)
+       .addField("Mensaje Anterior:", `${oldMessage.content}`, true)
+       .addField("Mensaje Ahora:", `${newMessage.content}`, true)
+       .setTimestamp()
+       .setFooter(config.footer)
+    let canalLogs = client.channels.cache.get(config.idcanallogs);
+    canalLogs.send(embedmsgact);
+  })
+
+   client.on('message', (message) => {
+    let m = message.content
+    let c = message.channel.name
+    let a = message.author.username
+    let embedmsgact = new Discord.MessageEmbed() 
+       .setTitle('**[NUEVO MENSAJE]**')
+       .setColor('GREEN')
+       .addField("Mensaje de:", a, true)
+       .addField("ID Author:", `\`${message.author.id}\``, true)
+       .addField("Mensaje:", `${m}`, false)
+       .addField("Canal:", c, true)
+       .addField("ID Canal:", `\`${c.id}\``, true)
+       .setTimestamp()
+       .setFooter(config.footer)
+    let canalLogs = client.channels.cache.get(config.idcanallogs);
+    canalLogs.send(embedmsgact);
+  })
+
+   client.on('messageDelete', (message) => {
+     if(message.author.bot) return;
+     if(message.channel.type === 'dm') return;
+     if(!message.guild.member(client.user).hasPermission('MANAGE_MESSAGES')) return;
+     let embedmsgel = new Discord.MessageEmbed() 
+       .setTitle('**[MENSAJE ELIMINADO]**')
+       .setColor('RED')
+       .addField("Mensaje:", message.content, true)
+       .addField("ID Mensaje:", `\`${message.id}\``, true)
+       .addField("Canal:", message.channel.name, false)
+       .addField("ID Canal:", `\`${message.channel.id}\``, true)
+       .addField("Borrado Por", `<@${message.author.id}>`, false)
+       .addField("ID De el Author", message.author.id, true)
+       .setTimestamp()
+       .setFooter(config.footer)
+       let canalLogs = client.channels.cache.get(config.idcanallogs);
+       canalLogs.send(embedmsgel);
+  })
+   client.on('guildMemberAdd', (member) => {
+    let embedbienv = new Discord.MessageEmbed() 
+       .setThumbnail(member.user.displayAvatarURL())
+       .setDescription(member.user.username + ' se unio al servidor!')
+       .setFooter('Ahora somos ' + member.guild.memberCount + ' miembros.' )
+       .setColor("BLUE") 
+     let canalLogs = client.channels.cache.get(config.idcanallogs);
+     canalLogs.send(embedbienv);
+     let canalBienvenida = client.channels.cache.get(config.idCanalBienvenidas);
+     canalBienvenida.send(embedsalid);
+  })
+
+  client.on('guildMemberRemove', (member) => {
+    let embedsalid = new Discord.MessageEmbed() 
+       .setThumbnail(member.user.displayAvatarURL())
+       .setDescription(member.user.username + ' dejo el servidor!')
+       .setFooter('Ahora somos ' + member.guild.memberCount + ' miembros.' )
+       .setColor("RED") 
+       let canalLogs = client.channels.cache.get(config.idcanallogs);
+       canalLogs.send(embedsalid);
+       let canalDespedida = client.channels.cache.get(config.idCanalDespedidas);
+       canalDespedida.send(embedsalid);
+  })
+    
 client.login(config.token);
