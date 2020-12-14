@@ -10,9 +10,9 @@ client.on('message', msg => {
     msg.reply('Pong!');
   }
 });
+
 client.on('message', msg => {
     if (msg.content === 'infoserver') {
-        
         let embedsv = new Discord.MessageEmbed()
         .setAuthor("Info de este Servidor")
         .setColor("RED")
@@ -25,9 +25,9 @@ client.on('message', msg => {
       msg.reply(embedsv);
     }
   });
+
   client.on('message', msg => {
     if (msg.content === 'miinfo') {
-   
       let embedin = new Discord.MessageEmbed()   
       .setAuthor(`Informacion de ${msg.author.tag}`)
       .setColor("RED")
@@ -38,6 +38,7 @@ client.on('message', msg => {
       msg.reply(embedin);
       }
   });
+
   client.on('channelUpdate', (oldChannel, newChannel) => {
     if(!oldChannel.guild) return;
     oldChannel.guild.fetchAuditLogs().then(logs => {
@@ -57,8 +58,8 @@ client.on('message', msg => {
         channel.send(embededcan);
        }
     })
-  
   })
+
   client.on('channelCreate', (channel) => {
     if(!channel.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
     if(!channel.guild) return;
@@ -77,8 +78,28 @@ client.on('message', msg => {
        let channel22 = client.channels.cache.get(config.idcanallogs);
        channel22.send(embedcrcan);
     })
-    
    })
+
+   client.on('channelDelete', (channel) => {
+    if(!channel.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
+    if(!channel.guild) return;
+    channel.guild.fetchAuditLogs().then(logs => { 
+     let userID = logs.entries.first().executor.id;
+     let embedbrcan = new Discord.MessageEmbed() 
+       .setTitle('**[CANAL ELIMINADO]**')
+       .setColor('RED')
+       .addField("Canal Eliminado:", channel.name, true)
+       .addField("ID Canal Eliminado:", channel.id, true)
+       .addField("Tipo de Canal:", channel.type, false)
+       .addField("ID De el que ha borrado el Canal", `\`${userID}\``, true)
+       .addField("Canal Eliminado Por:", `**__<@!${userID}>__**`, true)
+       .setTimestamp()
+       .setFooter(config.footer)
+       let channel = client.channels.cache.get(config.idcanallogs);
+       channel.send(embedbrcan);
+    })
+   })
+
   client.on('roleUpdate', (oldRole, newRole) => {
     if(!oldRole.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
     oldRole.guild.fetchAuditLogs().then(logs => { 
@@ -98,8 +119,8 @@ client.on('message', msg => {
          channel.send(embededrol);
       }
     })
-    
    })
+
    client.on('roleCreate', (role) => {
     if(!role.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
     role.guild.fetchAuditLogs().then(logs => { 
@@ -115,8 +136,25 @@ client.on('message', msg => {
        .setFooter(config.footer)
        let channel = client.channels.cache.get(config.idcanallogs);
        channel.send(embedcrrol);
-      
     })
-    
    })
+
+   client.on('roleDelete', (role) => {
+    if(!role.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
+    role.guild.fetchAuditLogs().then(logs => {
+     let userID = logs.entries.first().executor.id;
+       let embedbrrol = new Discord.MessageEmbed() 
+       .setTitle('**[ROL ELIMINADO]**')
+       .setColor('RED')
+       .addField("Rol Eliminado:", role.name, true)
+       .addField("ID Rol Eliminado:", role.id, false)
+       .addField("Rol Eliminado Por:", `**__<@!${userID}>__**`, true)
+       .addField("ID De el que ha borrado el Rol", `\`${userID}\``, true)
+       .setTimestamp()
+       .setFooter(config.footer)
+       let channel = client.channels.cache.get(config.idcanallogs);
+       channel.send(embedbrrol);
+    })
+   })
+   
 client.login(config.token);
