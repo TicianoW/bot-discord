@@ -39,17 +39,10 @@ client.on('message', msg => {
       }
   });
   client.on('channelUpdate', (oldChannel, newChannel) => {
-    // Validamos que el Evento sea un Server
     if(!oldChannel.guild) return;
-  
-    // Solicitamos los datos de el Registro de Auditoria
-    oldChannel.guild.fetchAuditLogs().then(logs => { 
-       // Obtenemos el id de el Autor de el Log
+    oldChannel.guild.fetchAuditLogs().then(logs => {
        let userID = logs.entries.first().executor.id;
-  
-       // Verificamos que se haya actualizado el nombre de un canal
        if(oldChannel.name !== newChannel.name) {
-  
         let embededcan = new Discord.MessageEmbed()  
         .setTitle('**[CANAL EDITADO]**')
         .setColor('ORANGE')
@@ -60,8 +53,6 @@ client.on('message', msg => {
         .addField("ID De el que ha editado el Canal", `\`${userID}\``, true)
         .setTimestamp()
         .setFooter(config.footer)
-        
-    
         let channel = oldChannel.guild.channels.cache.get(config.idcanallogs);
         channel.send(embededcan);
        }
@@ -69,16 +60,9 @@ client.on('message', msg => {
   
   })
   client.on('roleUpdate', (oldRole, newRole) => {
-    // verificamos si nuestro bot tiene permisos de ver el log de auditoria de un servidor
     if(!oldRole.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
-   
-    // Solicitamos los datos de el Registro de Auditoria
     oldRole.guild.fetchAuditLogs().then(logs => { 
-     // Obtenemos el id de usuario autor del log
      let userID = logs.entries.first().executor.id;
-
-   
-      // Verificamos que se haya actualizado el nombre de un ROL
      if(oldRole.name !== newRole.name) {
       let embededrol = new Discord.MessageEmbed()  
          .setTitle('**[ROL EDITADO]**')
@@ -90,8 +74,6 @@ client.on('message', msg => {
          .addField("ID De el que ha editado el Rol", `\`${userID}\``, true)
          .setTimestamp()
          .setFooter(config.footer)
-         
-     
          let channel = client.channels.cache.get(config.idcanallogs);
          channel.send(embededrol);
       }
@@ -99,16 +81,9 @@ client.on('message', msg => {
     
    })
    client.on('roleCreate', (role) => {
-    // Verificamos si nuestro bot tiene permisos de ver el log de auditoria de un servidor
     if(!role.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
-   
-    // Solicitamos los datos de el Registro de Auditoria
     role.guild.fetchAuditLogs().then(logs => { 
-     // Obtenemos el id de usuario autor del log
      let userID = logs.entries.first().executor.id;
- 
-   
-     // Verificamos que se haya actualizado el nombre de un rol
      let embedcrrol = new Discord.MessageEmbed() 
        .setTitle('**[ROL CREADO]**')
        .setColor('GREEN')
@@ -118,7 +93,6 @@ client.on('message', msg => {
        .addField("ID Creador de el Rol", `\`${userID}\``, true)
        .setTimestamp()
        .setFooter(config.footer)
-         
        let channel = client.channels.cache.get(config.idcanallogs);
        channel.send(embedcrrol);
       
