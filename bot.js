@@ -118,7 +118,7 @@ client.on('message', msg => {
     let m = message.content
     let c = message.channel.name
     let a = message.author.username
-    let embedmsgact = new Discord.MessageEmbed() 
+    let embedmsgnue = new Discord.MessageEmbed() 
        .setTitle('**[NUEVO MENSAJE]**')
        .setColor('GREEN')
        .addField("Mensaje de:", a, true)
@@ -129,7 +129,7 @@ client.on('message', msg => {
        .setTimestamp()
        .setFooter(config.footer)
        let canalLogs = client.channels.cache.get(config.idCanalLogs);
-    canalLogs.send(embedmsgact);
+    canalLogs.send(embedmsgnue);
   })
 
    client.on('messageDelete', (message) => {
