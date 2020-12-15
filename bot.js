@@ -78,6 +78,7 @@ client.on('message', msg => {
        canalLogs.send(embedbrcan);
     })
   })
+
    client.on('roleCreate', (role) => {
     if(!role.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
     role.guild.fetchAuditLogs().then(logs => { 
@@ -96,6 +97,23 @@ client.on('message', msg => {
     })
   })
 
+  client.on('roleUpdate', (oldRole, newRole) => {
+    if(!oldRole.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
+    oldRole.guild.fetchAuditLogs().then(logs => { 
+     let userID = logs.entries.first().executor.id;
+     if(oldRole.name !== newRole.name) {
+      let embedacrol = new Discord.MessageEmbed() 
+         .setTitle('**[NOMBRE DE ROL EDITADO]**')
+         .setColor('RED')
+         .setDescription(`**Nombre del rol editado correctamente**\nNombre anterior: **${oldRole.name}**\nNuevo nombre: **${newRole.name}**\nID rol: **${oldRole.id}**\nPor: [<@${userID}>] (ID: **${userID}**)`)
+         .setTimestamp()
+         .setFooter(config.footer)
+         let canalLogs = client.channels.cache.get(config.idCanalLogs);
+         canalLogs.send(embedacrol);
+      }
+    })
+   })
+   
    client.on('roleDelete', (role) => {
     if(!role.guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
     role.guild.fetchAuditLogs().then(logs => {
@@ -113,6 +131,7 @@ client.on('message', msg => {
        canalLogs.send(embedbrrol);
     })
   })
+
    client.on('message', (message) => {
     if (message.author.bot) return;
     let m = message.content
@@ -131,7 +150,7 @@ client.on('message', msg => {
        let canalLogs = client.channels.cache.get(config.idCanalLogs);
     canalLogs.send(embedmsgnue);
   })
-
+   
    client.on('messageDelete', (message) => {
     if (message.author.bot) return;
      if(message.author.bot) return;
@@ -151,6 +170,7 @@ client.on('message', msg => {
        let canalLogs = client.channels.cache.get(config.idCanalLogs);
        canalLogs.send(embedmsgel);
   })
+
    client.on('guildMemberAdd', (member) => {
     let embedbienv = new Discord.MessageEmbed() 
        .setThumbnail(member.user.displayAvatarURL())
